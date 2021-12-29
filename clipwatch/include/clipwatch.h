@@ -24,20 +24,20 @@ typedef struct Clipwatch_ClipWatcher Clipwatch_ClipWatcher;
 
 // pollingIntervalInMs is only used as a fallback
 // when clipboard watching is not available
-CLIPWATCH_MODULE_API Clipwatch_ClipWatcher* Clipwatch_Init(
-	int pollingIntervalInMs,
-	void (*clipboardEventHandler)(const char*, size_t, void*),
-	void* userData,
-	void (*userDataDeleter)(void*));
+CLIPWATCH_MODULE_API Clipwatch_ClipWatcher *Clipwatch_Init(
+        int pollingIntervalInMs,
+        void (*clipboardEventHandler)(const char *, size_t, void *),
+        void *userData,
+        void (*userDataDeleter)(void *));
 
 CLIPWATCH_MODULE_API void Clipwatch_Release(
-	Clipwatch_ClipWatcher* handle);
+        Clipwatch_ClipWatcher *handle);
 
 CLIPWATCH_MODULE_API void Clipwatch_Start(
-	Clipwatch_ClipWatcher* handle);
+        Clipwatch_ClipWatcher *handle);
 
 CLIPWATCH_MODULE_API void Clipwatch_Stop(
-	Clipwatch_ClipWatcher* handle);
+        Clipwatch_ClipWatcher *handle);
 
 #ifdef __cplusplus
 }

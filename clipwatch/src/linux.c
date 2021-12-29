@@ -1,4 +1,5 @@
 #include "../include/clipwatch.h"
+
 #ifndef _WIN32
 
 #include <X11/Xatom.h>
@@ -15,19 +16,24 @@
 
 struct Clipwatch_ClipWatcher
 {
-	void* userData;
-	void (*userDataDeleter)(void*);
-	void (*clipboardEventHandler)(const char*, size_t, void*);
-	const char* errorMessage;
+    void *userData;
+
+    void (*userDataDeleter)(void *);
+
+    void (*clipboardEventHandler)(const char *, size_t, void *);
+
+    const char *errorMessage;
+
     int status;
+
     pthread_t listeningThread;
 };
 
-static void* reallocate(void* buffer, size_t* length)
+static void *reallocate(void *buffer, size_t *length)
 {
     size_t newLen = *length * 2 + 1;
-    void* newBuf = realloc(buffer, newLen);
-    if(newBuf)
+    void *newBuf = realloc(buffer, newLen);
+    if (newBuf)
     {
         *length = newLen;
     }
@@ -35,29 +41,29 @@ static void* reallocate(void* buffer, size_t* length)
     return newBuf;
 }
 
-static void* Clipboard_ListeningWorker(void* rawHandle)
+static void* Clipboard_ListeningWorker(void *rawHandle)
 {
-	Clipwatch_ClipWatcher* handle = (Clipwatch_ClipWatcher*)rawHandle;
-	Display* disp = XOpenDisplay(NULL);
-	if(!disp)
+    Clipwatch_ClipWatcher *handle = (Clipwatch_ClipWatcher *) rawHandle;
+    Display *disp = XOpenDisplay(NULL);
+    if (!disp)
     {
-		handle->errorMessage = "Can't open X display";
-		return NULL;
-	}
+        handle->errorMessage = "Can't open X display";
+        return NULL;
+    }
 
-	Window root = DefaultRootWindow(disp);
+    Window root = DefaultRootWindow(disp);
 
-	Atom clip = XInternAtom(disp, "CLIPBOARD", False);
+    Atom clip = XInternAtom(disp, "CLIPBOARD", False);
 
-	XEvent evt;
+    XEvent evt;
 
-	XFixesSelectSelectionInput(disp, root, clip, XFixesSetSelectionOwnerNotifyMask);
+    XFixesSelectSelectionInput(disp, root, clip, XFixesSetSelectionOwnerNotifyMask);
 
-    char* buffer = NULL;
+    char *buffer = NULL;
     size_t length = 512;
 
     buffer = malloc(length);
-    if(!buffer)
+    if (!buffer)
     {
         handle->errorMessage = "Could not allocate memory";
         return NULL;
@@ -65,31 +71,31 @@ static void* Clipboard_ListeningWorker(void* rawHandle)
 
     handle->status = STATUS_RUNNING;
 
-	while(handle->status == STATUS_RUNNING)
-	{
-		XNextEvent(disp, &evt);
+    while (handle->status == STATUS_RUNNING)
+    {
+        XNextEvent(disp, &evt);
 
-        if(handle->status == STATUS_STOPPED)
+        if (handle->status == STATUS_STOPPED)
         {
             continue;
         }
 
-        if(handle->status == STATUS_TO_BE_DISPOSED)
+        if (handle->status == STATUS_TO_BE_DISPOSED)
         {
             break;
         }
 
-        FILE* f;
-        if((f = popen("xsel -b", "r")) != NULL)
+        FILE *f;
+        if ((f = popen("xsel -b", "r")) != NULL)
         {
             size_t readOffset = 0;
             size_t readLength = 0;
-            while((readLength = fread(buffer + readOffset, 1, length - readOffset, f)) != 0)
+            while ((readLength = fread(buffer + readOffset, 1, length - readOffset, f)) != 0)
             {
-                if(readOffset + readLength == length)
+                if (readOffset + readLength == length)
                 {
-                    void* newBuf = reallocate(buffer, &length);
-                    if(!newBuf)
+                    void *newBuf = reallocate(buffer, &length);
+                    if (!newBuf)
                     {
                         handle->errorMessage = "Could not allocate memory";
                         break;
@@ -101,7 +107,7 @@ static void* Clipboard_ListeningWorker(void* rawHandle)
             pclose(f);
             handle->clipboardEventHandler(buffer, readOffset, handle->userData);
         }
-	}
+    }
 
     XCloseDisplay(disp);
     free(buffer);
@@ -109,55 +115,55 @@ static void* Clipboard_ListeningWorker(void* rawHandle)
     return NULL;
 }
 
-Clipwatch_ClipWatcher* Clipwatch_Init(
-	int pollingIntervalInMs,
-	void (*clipboardEventHandler)(const char*, size_t, void*),
-	void* userData,
-	void (*userDataDeleter)(void*))
+Clipwatch_ClipWatcher *Clipwatch_Init(
+        int pollingIntervalInMs,
+        void (*clipboardEventHandler)(const char *, size_t, void *),
+        void *userData,
+        void (*userDataDeleter)(void *))
 {
-    (void)pollingIntervalInMs; // unused
-	Clipwatch_ClipWatcher* handle = malloc(sizeof *handle);
-	if(!handle)
-	{
-		return NULL;
-	}
+    (void) pollingIntervalInMs; // unused
+    Clipwatch_ClipWatcher *handle = malloc(sizeof *handle);
+    if (!handle)
+    {
+        return NULL;
+    }
 
-	handle->userData = userData;
-	handle->userDataDeleter = userDataDeleter;
-	handle->clipboardEventHandler = clipboardEventHandler;
-	handle->errorMessage = NULL;
+    handle->userData = userData;
+    handle->userDataDeleter = userDataDeleter;
+    handle->clipboardEventHandler = clipboardEventHandler;
+    handle->errorMessage = NULL;
     handle->status = STATUS_STOPPED;
-	
-	int result_code = pthread_create(&handle->listeningThread, NULL, Clipboard_ListeningWorker, handle);
 
-	return handle;
+    int result_code = pthread_create(&handle->listeningThread, NULL, Clipboard_ListeningWorker, handle);
+
+    return handle;
 }
 
 void Clipwatch_Release(
-	Clipwatch_ClipWatcher* handle)
+        Clipwatch_ClipWatcher *handle)
 {
-	if(!handle)
-	{
-		return;
-	}
+    if (!handle)
+    {
+        return;
+    }
     handle->status = STATUS_TO_BE_DISPOSED;
 
     pthread_cancel(handle->listeningThread);
-	if(handle->userDataDeleter)
-	{
-		handle->userDataDeleter(handle->userData);
-	}
-	free(handle);
+    if (handle->userDataDeleter)
+    {
+        handle->userDataDeleter(handle->userData);
+    }
+    free(handle);
 }
 
 void Clipwatch_Start(
-	Clipwatch_ClipWatcher* handle)
+        Clipwatch_ClipWatcher *handle)
 {
     handle->status = STATUS_RUNNING;
 }
 
 void Clipwatch_Stop(
-	Clipwatch_ClipWatcher* handle)
+        Clipwatch_ClipWatcher *handle)
 {
     handle->status = STATUS_STOPPED;
 }
