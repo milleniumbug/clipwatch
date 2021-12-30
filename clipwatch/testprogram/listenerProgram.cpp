@@ -28,7 +28,17 @@ int main()
             NULL,
             NULL));
 
-    Clipwatch_Start(handle.get());
+    std::cout << "Started at stopped state" << "\n";
+    std::this_thread::sleep_for(5s);
 
-    std::this_thread::sleep_for(20000s);
+    for(int i = 0; i < 3; i++)
+    {
+        Clipwatch_Start(handle.get());
+        std::cout << "Started" << "\n";
+        std::this_thread::sleep_for(4s);
+
+        Clipwatch_Stop(handle.get());
+        std::cout << "Stopped" << "\n";
+        std::this_thread::sleep_for(4s);
+    }
 }

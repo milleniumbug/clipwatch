@@ -2,8 +2,6 @@
 
 #include "../include/clipwatch.h"
 
-#ifdef _WIN32
-
 #include <windows.h>
 #include <process.h>
 #include <combaseapi.h>
@@ -188,5 +186,3 @@ CLIPWATCH_MODULE_API void Clipwatch_Stop(
 {
     handle->status = STATUS_STOPPED;
 }
-
-#endif
