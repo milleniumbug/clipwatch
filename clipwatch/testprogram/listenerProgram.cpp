@@ -3,6 +3,7 @@
 #include <memory>
 #include <chrono>
 #include <thread>
+#include <iomanip>
 #include <string_view>
 
 struct ClipwatchDeleter
@@ -15,7 +16,14 @@ struct ClipwatchDeleter
 
 void clipboardEventHandler(const char *text, size_t length, void *userData)
 {
-    std::cout << "EVENT: " << std::string_view(text, length) << "\n";
+    std::string_view s(text, length);
+    std::cout << "EVENT: " << s << "\n" << "\n";
+    for (auto ch : s)
+    {
+        std::cout << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(static_cast<unsigned char>(ch)) << " ";
+    }
+
+    std::cout << "\n";
 }
 
 int main()

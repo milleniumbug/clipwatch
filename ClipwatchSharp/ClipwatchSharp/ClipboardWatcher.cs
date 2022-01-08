@@ -35,11 +35,23 @@ namespace ClipwatchSharp
 
         public void Start()
         {
+            ThrowIfDisposed();
+
             NativeFunctions.Clipwatch_Start(this.handle);
         }
-        
+
+        private void ThrowIfDisposed()
+        {
+            if (this.handle.IsClosed)
+            {
+                throw new ObjectDisposedException(nameof(ClipboardWatcher), "object already disposed");
+            }
+        }
+
         public void Stop()
         {
+            ThrowIfDisposed();
+            
             NativeFunctions.Clipwatch_Stop(this.handle);
         }
 

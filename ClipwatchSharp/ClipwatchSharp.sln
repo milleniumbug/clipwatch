@@ -1,22 +1,51 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipwatchSharp", "ClipwatchSharp\ClipwatchSharp.csproj", "{01FDB669-F9CB-4261-8011-1F319445665C}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipwatchSharp", "ClipwatchSharp\ClipwatchSharp.csproj", "{01FDB669-F9CB-4261-8011-1F319445665C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipwatchSharpDemo", "ClipwatchSharpDemo\ClipwatchSharpDemo.csproj", "{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClipwatchSharpDemo", "ClipwatchSharpDemo\ClipwatchSharpDemo.csproj", "{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{01FDB669-F9CB-4261-8011-1F319445665C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01FDB669-F9CB-4261-8011-1F319445665C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Debug|x64.Build.0 = Debug|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Debug|x86.Build.0 = Debug|Any CPU
 		{01FDB669-F9CB-4261-8011-1F319445665C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01FDB669-F9CB-4261-8011-1F319445665C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Release|x64.ActiveCfg = Release|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Release|x64.Build.0 = Release|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Release|x86.ActiveCfg = Release|Any CPU
+		{01FDB669-F9CB-4261-8011-1F319445665C}.Release|x86.Build.0 = Release|Any CPU
 		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Debug|x64.ActiveCfg = Debug|x64
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Debug|x64.Build.0 = Debug|x64
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Debug|x86.ActiveCfg = Debug|x86
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Debug|x86.Build.0 = Debug|x86
 		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Release|x64.ActiveCfg = Release|x64
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Release|x64.Build.0 = Release|x64
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Release|x86.ActiveCfg = Release|x86
+		{457315DD-D2D4-40B6-9AC2-E59C4A7C5C6D}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D9E3C0C-C482-4720-8C80-A9A60ED0535B}
 	EndGlobalSection
 EndGlobal

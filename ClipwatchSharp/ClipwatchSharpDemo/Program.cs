@@ -11,6 +11,7 @@ for (int i = 0; i < 3; ++i)
 {
     Thread.Sleep(5000);
     clipwatch.Start();
+    Console.WriteLine("Started");
     Thread.Sleep(5000);
     clipwatch.Stop();
     Console.WriteLine("Stopped");

@@ -36,7 +36,7 @@ toUTF8(
     if (src_length == 0) { src_length = wcslen(src); }
     int length = WideCharToMultiByte(CP_UTF8, 0, src, src_length,
         0, 0, NULL, NULL);
-    char* output_buffer = (char*)malloc((length + 1) * sizeof(char));
+    char* output_buffer = malloc((length + 1) * sizeof *output_buffer);
     if (output_buffer) {
         WideCharToMultiByte(CP_UTF8, 0, src, src_length,
             output_buffer, length, NULL, NULL);
